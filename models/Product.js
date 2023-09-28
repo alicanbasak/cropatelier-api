@@ -5,7 +5,6 @@ const ProductSchema = new Schema(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
-    brand: { type: String },
     category: { type: Object, ref: "Category", required: true },
     sizes: {
       type: [String],
