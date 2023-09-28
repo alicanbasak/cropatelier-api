@@ -1,9 +1,9 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken.js";
-import { getTokenFromHeader } from "../utils/getTokenFromHeader.js";
-import { verifyToken } from "../utils/verifyToken.js";
+import generateToken from "../utils/generate-token.js";
+import { getTokenFromHeader } from "../utils/get-token-from-header.js";
+import { verifyToken } from "../utils/verify-token.js";
 // @desc    Register a new user
 // @route   POST /api/v1/users/register
 // @access  Private/Admin
