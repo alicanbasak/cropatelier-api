@@ -2,7 +2,7 @@ import {
   registerUser,
   loginUser,
   getUserProfile,
-} from "../controllers/usersController.js";
+} from "../controllers/user.controller.js";
 import express from "express";
 import { isLoggedIn } from "../middlewares/isLoggedIn.js";
 
