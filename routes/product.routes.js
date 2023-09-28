@@ -2,7 +2,7 @@ import {
   createProduct,
   getAllProducts,
 } from "../controllers/product.controller.js";
-import { isLoggedIn } from "../middlewares/isLoggedIn.js";
+import { isLoggedIn } from "../middlewares/is-logged-in.js";
 import express from "express";
 
 // Initialize express router

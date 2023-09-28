@@ -6,7 +6,7 @@ import productRoutes from "../routes/product.routes.js";
 import {
   globalErrorHandler,
   notFound,
-} from "../middlewares/globalErrorHandler.js";
+} from "../middlewares/global-error-handler.js";
 
 globalErrorHandler;
 
