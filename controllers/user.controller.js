@@ -52,7 +52,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   // Compare password entered by user with password in database
   // If password is correct, return a success message
 
-  if (user && (await bcrypt.compare(password, user?.password))) {
+  if (await bcrypt.compare(password, user?.password)) {
     return res.status(200).json({
       message: "User logged in successfully",
       data: user,
