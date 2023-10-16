@@ -8,8 +8,6 @@ import {
   notFound,
 } from "../middlewares/global-error-handler.js";
 
-globalErrorHandler;
-
 // Load env vars
 dotenv.config();
 
