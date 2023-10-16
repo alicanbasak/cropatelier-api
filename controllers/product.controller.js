@@ -22,7 +22,6 @@ export const createProduct = asyncHandler(async (req, res) => {
 
   if (!categoryFound) {
     throw new Error("Category not found");
-    return;
   }
   // Create Product
   const product = await Product.create({
