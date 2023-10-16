@@ -135,7 +135,7 @@ export const deleteCategory = asyncHandler(async (req, res) => {
     }
 
     // Check if category has subcategories
-    if (category.parent && category.parent !== null) {
+    if (category.parent) {
       res.status(400).json({ error: "Category has subcategories" });
       return;
     }
