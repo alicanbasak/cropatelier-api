@@ -12,7 +12,7 @@ export const createCategory = asyncHandler(async (req, res) => {
 
     // Check if category already exists
     const category = new Category({
-      name,
+      name: name.toLowerCase(),
       user: req.userId,
       image,
     });

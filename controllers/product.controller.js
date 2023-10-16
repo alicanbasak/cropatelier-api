@@ -1,6 +1,7 @@
 import Product from "../models/Product.js";
 import asyncHandler from "express-async-handler";
 import { applyFiltersAndPagination } from "../utils/filter-pagination.js";
+import Category from "../models/Category.js";
 
 // @desc Create New Product
 // @route POST /api/v1/products
@@ -16,6 +17,13 @@ export const createProduct = asyncHandler(async (req, res) => {
     throw new Error("Product already exists");
   }
 
+  // Find the category
+  const categoryFound = await Category.findOne({ name: category });
+
+  if (!categoryFound) {
+    throw new Error("Category not found");
+    return;
+  }
   // Create Product
   const product = await Product.create({
     name,
@@ -29,6 +37,11 @@ export const createProduct = asyncHandler(async (req, res) => {
   });
 
   //Push Product to Category
+  categoryFound.products.push(product._id);
+
+  // Save category
+  await categoryFound.save();
+
   // Send response
   return res.status(201).json({
     status: "success",
