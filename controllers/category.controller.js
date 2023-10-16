@@ -94,6 +94,7 @@ export const updateCategory = asyncHandler(async (req, res) => {
     // Check if category exists
     if (!category) {
       res.status(404).json({ error: "Category not found" });
+      return;
     }
 
     // Get data from request body
@@ -134,7 +135,7 @@ export const deleteCategory = asyncHandler(async (req, res) => {
     }
 
     // Check if category has subcategories
-    if (category.parent && category.parent) {
+    if (category.parent && category.parent !== null) {
       res.status(400).json({ error: "Category has subcategories" });
       return;
     }
