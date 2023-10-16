@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import dbConnect from "../config/db-connect.js";
 import userRoutes from "../routes/user.routes.js";
 import productRoutes from "../routes/product.routes.js";
+import categoryRoutes from "../routes/category.routes.js";
 import {
   globalErrorHandler,
   notFound,
@@ -23,6 +24,7 @@ app.use(express.json());
 // Mount routes
 app.use("/api/v1/users/", userRoutes);
 app.use("/api/v1/products/", productRoutes);
+app.use("/api/v1/categories/", categoryRoutes);
 
 // Error Middleware
 app.use(notFound);
