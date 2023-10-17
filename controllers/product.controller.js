@@ -56,7 +56,7 @@ export const createProduct = asyncHandler(async (req, res) => {
 export const getAllProducts = asyncHandler(async (req, res) => {
   // Apply filters and pagination
   const { query, pagination, total } = await applyFiltersAndPagination(
-    Product.find(),
+    Product.find().populate("reviews"),
     req
   );
 
@@ -80,7 +80,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
 
 export const getProduct = asyncHandler(async (req, res) => {
   // Find product
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).populate("reviews");
 
   // Check if product exists
   if (!product) {

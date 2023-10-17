@@ -5,6 +5,7 @@ import userRoutes from "../routes/user.routes.js";
 import productRoutes from "../routes/product.routes.js";
 import categoryRoutes from "../routes/category.routes.js";
 import colorRoutes from "../routes/color.routes.js";
+import reviewRoutes from "../routes/review.routes.js";
 import {
   globalErrorHandler,
   notFound,
@@ -27,6 +28,7 @@ app.use("/api/v1/users/", userRoutes);
 app.use("/api/v1/products/", productRoutes);
 app.use("/api/v1/categories/", categoryRoutes);
 app.use("/api/v1/colors/", colorRoutes);
+app.use("/api/v1/reviews/", reviewRoutes);
 
 // Error Middleware
 app.use(notFound);
