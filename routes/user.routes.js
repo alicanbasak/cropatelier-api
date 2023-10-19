@@ -2,6 +2,7 @@ import {
   registerUser,
   loginUser,
   getUserProfile,
+  updateUserShippingAddress,
 } from "../controllers/user.controller.js";
 import express from "express";
 import { isLoggedIn } from "../middlewares/is-logged-in.js";
@@ -17,5 +18,8 @@ userRoutes.post("/login", loginUser);
 
 // Get request to get user profile
 userRoutes.get("/profile", isLoggedIn, getUserProfile);
+
+// Put request to update user shipping address
+userRoutes.put("/update/shipping", isLoggedIn, updateUserShippingAddress);
 
 export default userRoutes;
