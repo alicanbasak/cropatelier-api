@@ -101,6 +101,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 
   iyzipay.payment.create(payment, async function (err, result) {
     if (result?.status === "success") {
+      console.log(result);
       const order = new Order({
         user: req.userId,
         orderNumber: orderNumber,
@@ -134,7 +135,58 @@ export const createOrder = asyncHandler(async (req, res) => {
         user,
       });
     } else {
-      console.log(err);
+      res.status(400).json({
+        success: false,
+        message: result.errorMessage,
+      });
+      return;
     }
+  });
+});
+
+// @desc update order
+// @route PUT /api/orders/:id
+// @access Private
+export const updateOrder = asyncHandler(
+  async (req, res) => {
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        status: req.body.status,
+        paymentStatus: req.body.paymentStatus,
+      },
+      { new: true }
+    );
+
+    if (!order) {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Order updated successfully",
+      order,
+    });
+  },
+  { new: true }
+);
+
+// @desc    Get all orders
+// @route   GET /api/orders
+// @access  Private/Admin
+
+export const getAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate("user", "name");
+
+  if (!orders) {
+    res.status(404);
+    throw new Error("Orders not found");
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Orders fetched successfully",
+    orders,
   });
 });

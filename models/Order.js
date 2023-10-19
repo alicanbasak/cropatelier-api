@@ -24,7 +24,8 @@ const OrderSchema = new Schema(
     paymentStatus: {
       type: String,
       required: true,
-      default: "Not paid",
+      enum: ["paid", "unpaid"],
+      default: "unpaid",
     },
     paymentMethod: {
       type: String,
@@ -43,7 +44,7 @@ const OrderSchema = new Schema(
     status: {
       type: String,
       default: "pending",
-      enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
+      enum: ["pending", "processing", "shipped", "cancelled", "completed"],
     },
     deliveredAt: {
       type: Date,
