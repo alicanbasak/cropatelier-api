@@ -79,3 +79,54 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     verified,
   });
 });
+
+// @desc    Update user shipping address
+// @route   PUT /api/v1/users/profile
+// @access  Private
+
+export const updateUserShippingAddress = asyncHandler(async (req, res) => {
+  // Get user shipping address from request body
+  const {
+    firstname,
+    lastname,
+    address,
+    city,
+    state,
+    country,
+    postalCode,
+    phone,
+  } = req.body;
+
+  // Update user shipping address
+  const user = await User.findByIdAndUpdate(
+    req.userId,
+    {
+      shippingAddress: {
+        firstname,
+        lastname,
+        address,
+        city,
+        state,
+        country,
+        postalCode,
+        phone,
+      },
+      hasShippingAddress: true,
+    },
+    {
+      new: true,
+    }
+  );
+
+  // Check if user exists
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  // If user is updated successfully, return a success message
+  res.json({
+    success: true,
+    message: "User shipping address updated successfully",
+    data: user,
+  });
+});
