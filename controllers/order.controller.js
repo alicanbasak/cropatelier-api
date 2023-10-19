@@ -110,7 +110,7 @@ export const createOrder = asyncHandler(async (req, res) => {
         currency: "TRY",
       });
 
-      user.orders.push(order?._id);
+      user.orders.push(order._id);
       await user.save();
 
       const products = await Product.find({ _id: { $in: orderItems } });
