@@ -105,7 +105,7 @@ export const createOrder = asyncHandler(async (req, res) => {
         user: req.userId,
         orderNumber: orderNumber,
         orderItems,
-        shippingAddress: user.shippingAddress,
+        shippingAddress: user.shippingAddress || shippingAddress,
         totalPrice,
         currency: "TRY",
       });
