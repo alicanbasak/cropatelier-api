@@ -119,9 +119,8 @@ export const createOrder = asyncHandler(async (req, res) => {
         const product = products.find(
           (product) => product?._id?.toString() === order?._id?.toString()
         );
-        if (product) {
-          product.totalSold += order?.qty;
-        }
+
+        product.totalSold += order?.qty;
 
         await product.save();
       });
