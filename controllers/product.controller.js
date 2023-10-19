@@ -138,6 +138,11 @@ export const deleteProduct = asyncHandler(async (req, res) => {
   // Find product
   const product = await Product.findByIdAndDelete(req.params.id);
 
+  // Delete product from category
+  const category = await Category.findOne({ name: product.category });
+  category.products.pull(product._id);
+  await category.save();
+
   // Check if product exists
   return res.json({
     status: 200,
