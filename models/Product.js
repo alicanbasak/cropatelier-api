@@ -31,6 +31,11 @@ ProductSchema.virtual("totalReviews").get(function () {
   return this.reviews.length;
 });
 
+ProductSchema.virtual("qtyLeft").get(function () {
+  const product = this;
+  return product.totalQty - product.totalSold;
+});
+
 //Average rating
 ProductSchema.virtual("averageRating").get(function () {
   let sum = 0;
