@@ -11,6 +11,7 @@ import {
   globalErrorHandler,
   notFound,
 } from "../middlewares/global-error-handler.js";
+import couponRoutes from "../routes/coupon.routes.js";
 
 // Load env vars
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/api/v1/categories/", categoryRoutes);
 app.use("/api/v1/colors/", colorRoutes);
 app.use("/api/v1/reviews/", reviewRoutes);
 app.use("/api/v1/orders/", orderRoutes);
+app.use("/api/v1/upload/", couponRoutes);
 
 // Error Middleware
 app.use(notFound);

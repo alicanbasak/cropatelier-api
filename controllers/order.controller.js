@@ -131,8 +131,8 @@ export const createOrder = asyncHandler(async (req, res) => {
       res.status(200).json({
         success: true,
         message: "Order created successfully",
-        order,
-        user,
+        data: order,
+        user: user,
       });
     } else {
       res.status(400).json({
@@ -166,7 +166,7 @@ export const updateOrder = asyncHandler(
     res.status(200).json({
       success: true,
       message: "Order updated successfully",
-      order,
+      data: order,
     });
   },
   { new: true }
@@ -187,7 +187,7 @@ export const getAllOrders = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Orders fetched successfully",
-    orders,
+    data: orders,
   });
 });
 
@@ -205,6 +205,6 @@ export const getOrder = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Order fetched successfully",
-    order,
+    data: order,
   });
 });

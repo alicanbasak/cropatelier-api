@@ -84,7 +84,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   return res.json({
     message: "User profile fetched successfully",
     verified,
-    user,
+    data: user,
   });
 });
 
@@ -138,9 +138,3 @@ export const updateUserShippingAddress = asyncHandler(async (req, res) => {
     data: user,
   });
 });
-
-// @desc    Get orders by user profile
-// @route   GET /api/users/profile/
-// @access  Private
-
-export const getOrdersByUser = asyncHandler(async (req, res) => {});

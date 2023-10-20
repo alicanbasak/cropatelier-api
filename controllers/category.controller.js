@@ -29,7 +29,7 @@ export const createCategory = asyncHandler(async (req, res) => {
     res.status(201).json({
       status: 201,
       message: "Category created successfully",
-      category: savedCategory,
+      data: savedCategory,
     });
   } catch (error) {
     // Send error response
@@ -50,7 +50,7 @@ export const getCategories = asyncHandler(async (req, res) => {
     res.json({
       status: 200,
       message: "Categories fetched successfully",
-      categories,
+      data: categories,
     });
   } catch (err) {
     res.status(500).json({ error: "Categories not fetced" });
@@ -75,7 +75,7 @@ export const getCategory = asyncHandler(async (req, res) => {
     res.json({
       status: 200,
       message: "Category fetched successfully",
-      category,
+      data: category,
     });
   } catch (err) {
     res.status(500).json({ error: "Category not fetced" });
@@ -112,7 +112,7 @@ export const updateCategory = asyncHandler(async (req, res) => {
     res.json({
       status: 200,
       message: "Category updated successfully",
-      category: updatedCategory,
+      data: updatedCategory,
     });
   } catch (err) {
     res.status(500).json({ error: "Category not updated" });

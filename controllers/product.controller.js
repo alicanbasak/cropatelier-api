@@ -45,7 +45,7 @@ export const createProduct = asyncHandler(async (req, res) => {
   return res.status(201).json({
     status: "success",
     message: "Product created successfully",
-    product,
+    data: product,
   });
 });
 
@@ -70,7 +70,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
     total,
     pagination,
     result: products.length,
-    products,
+    data: products,
   });
 });
 
@@ -91,7 +91,7 @@ export const getProduct = asyncHandler(async (req, res) => {
   return res.json({
     status: 200,
     message: "Product fetched successfully",
-    product,
+    data: product,
   });
 });
 
@@ -126,7 +126,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
   return res.json({
     status: 200,
     message: "Product updated successfully",
-    product,
+    data: product,
   });
 });
 
@@ -147,6 +147,6 @@ export const deleteProduct = asyncHandler(async (req, res) => {
   return res.json({
     status: 200,
     message: "Product deleted successfully",
-    product,
+    data: product,
   });
 });
