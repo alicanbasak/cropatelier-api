@@ -177,7 +177,7 @@ export const updateOrder = asyncHandler(
 // @access  Private/Admin
 
 export const getAllOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({}).populate("user", "name");
+  const orders = await Order.find({}).populate("user", "fullname email");
 
   if (!orders) {
     res.status(404);
@@ -188,5 +188,23 @@ export const getAllOrders = asyncHandler(async (req, res) => {
     success: true,
     message: "Orders fetched successfully",
     orders,
+  });
+});
+
+// @desc    Get order by id
+// @route   GET /api/orders/:id
+// @access  Private
+export const getOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate("user");
+
+  if (!order) {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Order fetched successfully",
+    order,
   });
 });

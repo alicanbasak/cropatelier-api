@@ -73,10 +73,18 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 
   // Verify token and get user id from token payload
   const verified = verifyToken(token);
-  console.log(verified);
+
+  const user = await User.findById(req.userId).populate("orders");
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
   return res.json({
     message: "User profile fetched successfully",
     verified,
+    user,
   });
 });
 
@@ -130,3 +138,9 @@ export const updateUserShippingAddress = asyncHandler(async (req, res) => {
     data: user,
   });
 });
+
+// @desc    Get orders by user profile
+// @route   GET /api/users/profile/
+// @access  Private
+
+export const getOrdersByUser = asyncHandler(async (req, res) => {});
