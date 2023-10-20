@@ -26,6 +26,14 @@ const CouponSchema = new Schema({
   },
 });
 
+// Coupoon day left
+CouponSchema.virtual("daysLeft").get(function () {
+  const daysLeft = Math.ceil(
+    (this.endDate - Date.now()) / (1000 * 60 * 60 * 24)
+  );
+  return daysLeft;
+});
+
 // Coupon is expired
 CouponSchema.virtual("isExpired").get(function () {
   return Date.now() > this.endDate;
@@ -46,6 +54,8 @@ CouponSchema.pre("validate", function (next) {
   }
   next();
 });
+
+CouponSchema.set("toJSON", { virtuals: true });
 
 const Coupon = mongoose.model("Coupon", CouponSchema);
 
