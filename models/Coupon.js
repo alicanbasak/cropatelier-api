@@ -26,6 +26,27 @@ const CouponSchema = new Schema({
   },
 });
 
+// Coupon is expired
+CouponSchema.virtual("isExpired").get(function () {
+  return Date.now() > this.endDate;
+});
+
+// Validaiton
+CouponSchema.pre("validate", function (next) {
+  // Check if coupon is expired
+  if (this.isExpired) {
+    next(new Error("Coupon is expired"));
+  }
+  next();
+});
+
+CouponSchema.pre("validate", function (next) {
+  if (this.discount <= 0 || this.discount > 100) {
+    next(new Error("Discount must be between 0 and 100"));
+  }
+  next();
+});
+
 const Coupon = mongoose.model("Coupon", CouponSchema);
 
 export default Coupon;
