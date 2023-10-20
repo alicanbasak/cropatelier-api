@@ -5,6 +5,7 @@ import asyncHandler from "express-async-handler";
 import Iyzipay from "iyzipay";
 import dotenv from "dotenv";
 import Randomstring from "randomstring";
+import Coupon from "../models/Coupon.js";
 
 dotenv.config();
 
@@ -21,6 +22,19 @@ const iyzipay = new Iyzipay({
 export const createOrder = asyncHandler(async (req, res) => {
   const { orderItems, shippingAddress, totalPrice } = req.body;
   const user = await User.findById(req.userId);
+  const { coupon } = req.query;
+
+  const couponFound = await Coupon.findOne({ code: coupon?.toUpperCase() });
+
+  if (couponFound?.isExpired) {
+    res.status(400);
+    throw new Error("Coupon is expired");
+  }
+
+  // if (couponFound) {
+  //   res.status(400);
+  //   throw new Error("Coupon not found");
+  // }
 
   //TODO: I will cart info from user req.body.cart
 
@@ -39,12 +53,17 @@ export const createOrder = asyncHandler(async (req, res) => {
     throw new Error("No order items");
   }
   const orderNumber = Randomstring.generate(10).toLocaleUpperCase();
+  // Get discount from coupon
 
   const payment = {
     locale: Iyzipay.LOCALE.TR,
     conversationId: orderNumber,
-    price: req.body.totalPrice,
-    paidPrice: req.body.totalPrice,
+    price: couponFound
+      ? req.body.totalPrice - (req.body.totalPrice * couponFound.discount) / 100
+      : totalPrice,
+    paidPrice: couponFound
+      ? req.body.totalPrice - (req.body.totalPrice * couponFound.discount) / 100
+      : req.body.totalPrice,
     currency: Iyzipay.CURRENCY.TRY,
     installment: "1",
     basketId: orderNumber,
@@ -63,7 +82,7 @@ export const createOrder = asyncHandler(async (req, res) => {
       name: user.shippingAddress.firstname,
       surname: user.shippingAddress.lastname,
       gsmNumber: user.shippingAddress.phone,
-      email: "email@email.com",
+      email: user.email,
       identityNumber: user.identityNumber
         ? user.identityNumber
         : req.body.identityNumber,
@@ -94,20 +113,28 @@ export const createOrder = asyncHandler(async (req, res) => {
         name: item.name,
         category1: "Petshop",
         itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
-        price: item.price.toString(),
+        // price: couponFound?  item.price.toString(),
+        price: couponFound
+          ? (item.price - (item.price * couponFound.discount) / 100).toString()
+          : item.price.toString(),
       };
     }),
   };
 
+  // console.log("payment", payment);
+  // console.log("totalPrice", totalPrice);
+
   iyzipay.payment.create(payment, async function (err, result) {
     if (result?.status === "success") {
-      console.log(result);
+      // console.log(result);
       const order = new Order({
         user: req.userId,
         orderNumber: orderNumber,
         orderItems,
         shippingAddress: user.shippingAddress || shippingAddress,
-        totalPrice,
+        totalPrice: couponFound
+          ? totalPrice - (totalPrice * couponFound.discount) / 100
+          : totalPrice,
         currency: "TRY",
       });
 

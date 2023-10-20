@@ -32,7 +32,7 @@ app.use("/api/v1/categories/", categoryRoutes);
 app.use("/api/v1/colors/", colorRoutes);
 app.use("/api/v1/reviews/", reviewRoutes);
 app.use("/api/v1/orders/", orderRoutes);
-app.use("/api/v1/upload/", couponRoutes);
+app.use("/api/v1/coupons/", couponRoutes);
 
 // Error Middleware
 app.use(notFound);
