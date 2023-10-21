@@ -1,3 +1,4 @@
+import upload from "../config/file-upload.js";
 import {
   createCategory,
   getCategories,
@@ -12,7 +13,7 @@ import express from "express";
 const categoryRoutes = express.Router();
 
 // Post request to create a new category
-categoryRoutes.post("/", isLoggedIn, createCategory);
+categoryRoutes.post("/", isLoggedIn, upload.single("file"), createCategory);
 categoryRoutes.get("/", getCategories);
 categoryRoutes.get("/:id", getCategory);
 categoryRoutes.put("/:id", isLoggedIn, updateCategory);

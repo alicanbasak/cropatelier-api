@@ -8,6 +8,10 @@ import Category from "../models/Category.js";
 // @access Private/Admin
 
 export const createProduct = asyncHandler(async (req, res) => {
+  console.log(req.files);
+
+  const convertedImages = req.files.map((file) => file.path);
+
   const { name, description, category, sizes, colors, price, totalQty } =
     req.body;
   // Product exists
@@ -16,10 +20,8 @@ export const createProduct = asyncHandler(async (req, res) => {
   if (productExists) {
     throw new Error("Product already exists");
   }
-
   // Find the category
   const categoryFound = await Category.findOne({ name: category });
-
   if (!categoryFound) {
     throw new Error("Category not found");
   }
@@ -33,14 +35,12 @@ export const createProduct = asyncHandler(async (req, res) => {
     user: req.userId,
     price,
     totalQty,
+    images: convertedImages,
   });
-
   //Push Product to Category
   categoryFound.products.push(product._id);
-
   // Save category
   await categoryFound.save();
-
   // Send response
   return res.status(201).json({
     status: "success",

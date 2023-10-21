@@ -8,13 +8,16 @@ import asyncHandler from "express-async-handler";
 export const createCategory = asyncHandler(async (req, res) => {
   try {
     // Get data from request body
-    const { name, parent, image } = req.body;
+    const { name, parent } = req.body;
+    const file = req.file;
+
+    const convertedImage = file.path;
 
     // Check if category already exists
     const category = new Category({
       name: name.toLowerCase(),
       user: req.userId,
-      image,
+      image: convertedImage,
     });
 
     // Check if parent category exists
