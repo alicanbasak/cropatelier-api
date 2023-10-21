@@ -104,6 +104,9 @@ export const updateProduct = asyncHandler(async (req, res) => {
   const { name, description, category, sizes, colors, price, totalQty } =
     req.body;
 
+  // image update
+  const convertedImages = req.files.map((file) => file.path);
+
   // Check if product exists
   const product = await Product.findByIdAndUpdate(
     req.params.id,
@@ -115,6 +118,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
       colors,
       price,
       totalQty,
+      images: convertedImages,
     },
     {
       // Return updated product

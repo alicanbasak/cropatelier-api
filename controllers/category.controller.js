@@ -101,12 +101,18 @@ export const updateCategory = asyncHandler(async (req, res) => {
     }
 
     // Get data from request body
-    const { name, parent, image } = req.body;
+    const { name, parent } = req.body;
 
     // Update category
     category.name = name || category.name;
     category.parent = parent || category.parent;
-    category.image = image || category.image;
+
+    // Image update
+    if (req.file) {
+      const file = req.file;
+      const convertedImage = file.path;
+      category.image = convertedImage;
+    }
 
     // Save category
     const updatedCategory = await category.save();

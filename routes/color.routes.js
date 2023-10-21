@@ -7,6 +7,7 @@ import {
 } from "../controllers/color.controller.js";
 import { isLoggedIn } from "../middlewares/is-logged-in.js";
 import express from "express";
+import isAdmin from "../middlewares/is-admin.js";
 
 // Initialize express router
 const colorRoutes = express.Router();
