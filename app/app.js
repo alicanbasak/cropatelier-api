@@ -17,14 +17,14 @@ import cors from "cors";
 // Load env vars
 dotenv.config();
 
-// Enable CORS
-app.use(cors());
-
 // Connect to database
 dbConnect();
 
 // Initialize express
 const app = express();
+
+// Enable CORS
+app.use(cors());
 
 // Set body parser
 app.use(express.json());
