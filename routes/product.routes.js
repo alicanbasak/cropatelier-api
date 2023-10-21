@@ -21,8 +21,8 @@ productRoutes.post(
   isAdmin,
   createProduct
 );
-productRoutes.get("/", isLoggedIn, getAllProducts);
-productRoutes.get("/:id", isLoggedIn, getProduct);
+productRoutes.get("/", getAllProducts);
+productRoutes.get("/:id", getProduct);
 productRoutes.put(
   "/:id",
   isLoggedIn,
