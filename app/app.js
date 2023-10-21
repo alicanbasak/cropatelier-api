@@ -12,9 +12,13 @@ import {
   notFound,
 } from "../middlewares/global-error-handler.js";
 import couponRoutes from "../routes/coupon.routes.js";
+import cors from "cors";
 
 // Load env vars
 dotenv.config();
+
+// Enable CORS
+app.use(cors());
 
 // Connect to database
 dbConnect();
