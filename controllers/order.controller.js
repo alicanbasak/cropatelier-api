@@ -121,9 +121,6 @@ export const createOrder = asyncHandler(async (req, res) => {
     }),
   };
 
-  // console.log("payment", payment);
-  // console.log("totalPrice", totalPrice);
-
   iyzipay.payment.create(payment, async function (err, result) {
     if (result?.status === "success") {
       // console.log(result);
@@ -233,5 +230,50 @@ export const getOrder = asyncHandler(async (req, res) => {
     success: true,
     message: "Order fetched successfully",
     data: order,
+  });
+});
+
+// @desc    Get sales sum of orders
+// @route   GET /api/orders/sales
+// @access  Private/Admin
+
+export const getOrderStats = asyncHandler(async (req, res) => {
+  // get minimum order
+  const getStats = await Order.aggregate([
+    {
+      $group: {
+        _id: null,
+        minimumSale: { $min: "$totalPrice" },
+        totalSales: { $sum: "$totalPrice" },
+        maximumSale: { $max: "$totalPrice" },
+        averageSales: { $avg: "$totalPrice" },
+      },
+    },
+  ]);
+
+  const date = new Date();
+  const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+  const saleToday = await Order.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: today,
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalSales: { $sum: "$totalPrice" },
+      },
+    },
+  ]);
+
+  res.status(200).json({
+    success: true,
+    message: "Sales fetched successfully",
+    stats: getStats,
+    salesToday: saleToday,
   });
 });

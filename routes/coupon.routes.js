@@ -12,10 +12,10 @@ import express from "express";
 const couponRoutes = express.Router();
 
 // Post request to create a new coupon
-couponRoutes.post("/", isLoggedIn, createCoupon);
+couponRoutes.post("/", isLoggedIn, isAdmin, createCoupon);
 couponRoutes.get("/", isLoggedIn, getCoupons);
 couponRoutes.get("/:id", isLoggedIn, getCoupon);
-couponRoutes.put("/:id", isLoggedIn, updateCoupon);
-couponRoutes.delete("/:id", isLoggedIn, deleteCoupon);
+couponRoutes.put("/:id", isLoggedIn, isAdmin, updateCoupon);
+couponRoutes.delete("/:id", isLoggedIn, isAdmin, deleteCoupon);
 
 export default couponRoutes;

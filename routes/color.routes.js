@@ -12,10 +12,10 @@ import express from "express";
 const colorRoutes = express.Router();
 
 // Post request to create a new color
-colorRoutes.post("/", isLoggedIn, createColor);
+colorRoutes.post("/", isLoggedIn, isAdmin, createColor);
 colorRoutes.get("/", getAllColors);
 colorRoutes.get("/:id", getColor);
-colorRoutes.put("/:id", isLoggedIn, updateColor);
-colorRoutes.delete("/:id", isLoggedIn, deleteColor);
+colorRoutes.put("/:id", isLoggedIn, isAdmin, updateColor);
+colorRoutes.delete("/:id", isLoggedIn, isAdmin, deleteColor);
 
 export default colorRoutes;

@@ -8,15 +8,22 @@ import {
 import { isLoggedIn } from "../middlewares/is-logged-in.js";
 import express from "express";
 import upload from "../config/file-upload.js";
+import isAdmin from "../middlewares/is-admin.js";
 
 // Initialize express router
 const productRoutes = express.Router();
 
 // Post request to create a new product
-productRoutes.post("/", upload.array("files"), isLoggedIn, createProduct);
+productRoutes.post(
+  "/",
+  upload.array("files"),
+  isLoggedIn,
+  isAdmin,
+  createProduct
+);
 productRoutes.get("/", isLoggedIn, getAllProducts);
 productRoutes.get("/:id", isLoggedIn, getProduct);
-productRoutes.put("/:id", isLoggedIn, updateProduct);
-productRoutes.delete("/:id", isLoggedIn, deleteProduct);
+productRoutes.put("/:id", isLoggedIn, isAdmin, updateProduct);
+productRoutes.delete("/:id", isLoggedIn, isAdmin, deleteProduct);
 
 export default productRoutes;
