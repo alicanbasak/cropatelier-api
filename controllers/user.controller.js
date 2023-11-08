@@ -17,6 +17,22 @@ export const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
+  if (!fullname) {
+    throw new Error("Fullname is required");
+  }
+
+  if (!email) {
+    throw new Error("Email is required");
+  }
+
+  if (!password) {
+    throw new Error("Password is required");
+  }
+
+  if (password.length < 6) {
+    throw new Error("Password must be at least 6 characters");
+  }
+
   // Hash password & create salt for password encryption before saving to database using bcryptjs
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
