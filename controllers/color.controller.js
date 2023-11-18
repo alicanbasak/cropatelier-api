@@ -37,7 +37,7 @@ export const getAllColors = asyncHandler(async (req, res) => {
   return res.status(200).json({
     status: "success",
     message: "Colors fetched successfully",
-    data: colors,
+    colors,
   });
 });
 
@@ -51,7 +51,7 @@ export const getColor = asyncHandler(async (req, res) => {
   return res.status(200).json({
     status: "success",
     message: "Color fetched successfully",
-    data: color,
+    color,
   });
 });
 
@@ -77,7 +77,7 @@ export const updateColor = asyncHandler(async (req, res) => {
   return res.status(200).json({
     status: "success",
     message: "Color updated successfully",
-    data: color,
+    color,
   });
 });
 
@@ -92,6 +92,6 @@ export const deleteColor = asyncHandler(async (req, res) => {
   return res.status(200).json({
     status: "success",
     message: "Color deleted successfully",
-    data: color,
+    color,
   });
 });

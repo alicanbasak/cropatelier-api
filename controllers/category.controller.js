@@ -9,15 +9,12 @@ export const createCategory = asyncHandler(async (req, res) => {
   try {
     // Get data from request body
     const { name, parent } = req.body;
-    const file = req.file;
-
-    const convertedImage = file.path;
 
     // Check if category already exists
     const category = new Category({
-      name: name.toLowerCase(),
+      name: name?.toLowerCase(),
       user: req.userId,
-      image: convertedImage,
+      image: req.file?.path,
     });
 
     // Check if parent category exists
@@ -53,7 +50,7 @@ export const getCategories = asyncHandler(async (req, res) => {
     res.json({
       status: 200,
       message: "Categories fetched successfully",
-      data: categories,
+      categories,
     });
   } catch (err) {
     res.status(500).json({ error: "Categories not fetced" });

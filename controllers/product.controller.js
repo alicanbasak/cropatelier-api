@@ -8,12 +8,12 @@ import Category from "../models/Category.js";
 // @access Private/Admin
 
 export const createProduct = asyncHandler(async (req, res) => {
+  console.log(req.body);
   console.log(req.files);
-
-  const convertedImages = req.files.map((file) => file.path);
-
   const { name, description, category, sizes, colors, price, totalQty } =
     req.body;
+  // Image upload
+  const convertedImages = req.files.map((file) => file?.path);
   // Product exists
   const productExists = await Product.findOne({ name });
   // Check if product exists
@@ -45,7 +45,7 @@ export const createProduct = asyncHandler(async (req, res) => {
   return res.status(201).json({
     status: "success",
     message: "Product created successfully",
-    data: product,
+    product,
   });
 });
 
@@ -70,7 +70,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
     total,
     pagination,
     result: products.length,
-    data: products,
+    products,
   });
 });
 
@@ -91,7 +91,7 @@ export const getProduct = asyncHandler(async (req, res) => {
   return res.json({
     status: 200,
     message: "Product fetched successfully",
-    data: product,
+    product,
   });
 });
 
