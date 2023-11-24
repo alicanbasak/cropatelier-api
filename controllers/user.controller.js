@@ -71,7 +71,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (await bcrypt.compare(password, user?.password)) {
     return res.status(200).json({
       message: "User logged in successfully",
-      data: user,
+      user,
       token: generateToken(user?._id),
     });
   } else {
